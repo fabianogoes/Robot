@@ -1,0 +1,10 @@
+#areaBody{
+    background-image: url(../img/background.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+#robo{
+    width: 100px; 
+    height: 100px;
+}

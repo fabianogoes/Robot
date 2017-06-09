@@ -73,7 +73,7 @@ public class RobotSteps {
 	@Then("^the robot must moved to Up$")
 	public void the_robot_must_moved_to_Up() throws Throwable {
 		int[] actualPositionExpected = this.robot.getActualPosition();
-		assertEquals("The Robot should is on actualPosition[1]", -1, actualPositionExpected[1]);
+		assertEquals("The Robot should is on actualPosition[1]", 9, actualPositionExpected[1]);
 	}
 	
 	/******************************
@@ -89,7 +89,7 @@ public class RobotSteps {
 	@Then("^the robot must moved to Left$")
 	public void the_robot_must_moved_to_Left() throws Throwable {
 		int[] actualPositionExpected = this.robot.getActualPosition();
-		assertEquals("The Robot should is on actualPosition[0]", -1, actualPositionExpected[0]);
+		assertEquals("The Robot should is on actualPosition[0]", 9, actualPositionExpected[0]);
 	}	
 	
 	/******************************

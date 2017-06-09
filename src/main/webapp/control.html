@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+	<head>
+        <title>Robot Control</title>        
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="img/BB8-100x100.png" rel="icon" type="image/png" >
+        	
+		<link href="css/bootstrap.css" rel="stylesheet"> </link>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0"></meta>
+		<meta name="apple-mobile-web-app-capable" content="yes"></meta>
+		<meta name="apple-mobile-web-app-status-bar-style" content="black"></meta>
+		
+	    <link href="css/ie10-viewport-bug-workaround.css" rel="stylesheet">
+	    <link href="css/sticky-footer.css" rel="stylesheet">
+	    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+	    <script src="js/libs/ie-emulation-modes-warning.js"></script>
+	    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+	    <!--[if lt IE 9]>
+	      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+	      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+	    <![endif]-->		
+	</head>
+
+	<body data-ng-app="mainApp" style="margin-top: 0px">
+			
+			<div class="panel panel-primary" data-ng-controller="ControlController as cc">
+				<div class="panel-heading  text-center" id="areaHeader">
+					<h3>Robot Control</h3>
+                </div>			
+				<div class="panel-body">
+					<div class="row">
+						<div class="col-xs-4 col-xs-offset-4">
+							<button id="btnUp" class="btn btn-primary col-xs-12" data-ng-click="cc.movePersonagem('up')">
+									<span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span>
+							</button>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-xs-4">
+							<button id="btnLeft" class="btn btn-primary col-xs-12" data-ng-click="cc.movePersonagem('left')">
+									<span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
+							</button>
+						</div>
+						<div class="col-xs-4 text-center">
+							<img alt="Robot" src="img/BB8-100x100.png" style="width: 45px; height: 45px;">
+						</div>
+						<div class="col-xs-4">
+							<button id="btnRight" class="btn btn-primary col-xs-12" data-ng-click="cc.movePersonagem('right')">
+									<span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span>
+							</button>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-xs-4 col-xs-offset-4">
+							<button id="btnDown" class="btn btn-primary col-xs-12" data-ng-click="cc.movePersonagem('down')">
+									<span class="glyphicon glyphicon-arrow-down" aria-hidden="true"></span>
+							</button>
+						</div>
+					</div>
+					<br/>
+					<div class="row text-center">
+						<div class="col=xs=12">
+							<span class="label label-default">Position: {{cc.actualPosition}}</span>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		    <footer class="footer">
+		      <div class="container text-center">
+		        <p class="text-muted">Robot 2017</p>
+		      </div>
+		    </footer>
+
+	</body>
+	
+	<script src="js/libs/jquery.min.1.11.1.js"></script>
+	<script src="js/libs/bootstrap.min.js"></script>
+	<script src="js/libs/angular.min.js"></script>
+  	<script src="js/libs/sockjs/sockjs.min.js"></script>
+  	<script src="js/libs/stomp/lib/stomp.min.js"></script>
+  	<script src="js/libs/ie10-viewport-bug-workaround.js"></script>
+	
+	<script src="js/app/app.js"></script>
+	<script src="js/app/controllers/control-controller.js"></script>
+        <script>
+            document.querySelector('body').addEventListener('keydown', function(event) {
+                var tecla = event.keyCode;
+
+                if(tecla == 37){
+                    $("#btnLeft").click();
+                }else if(tecla == 38){
+                    $("#btnUp").click();
+                }else if(tecla == 39){
+                    $("#btnRight").click();
+                }else if(tecla == 40){
+                    $("#btnDown").click();
+                }
+            });
+        </script>	
+
+</html>

@@ -1,108 +1,77 @@
 <!DOCTYPE html>
-<html data-ng-app="mainApp">
+<html lang="en" ng-app="mainApp">
     <head>
-		<meta charset="UTF-8">
-        <title>Chat WebSocket</title>
-        <script src="js/sockjs-0.3.4.js"></script>
-        <script src="js/stomp.js"></script>
+        <title>Robot</title>        
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="img/BB8-100x100.png" rel="icon" type="image/png" >
+
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+        <link rel="stylesheet" href="css/bootstrap-theme.min.css">
+        <link rel="stylesheet" href="css/style.css">
+        
+	    <link href="css/ie10-viewport-bug-workaround.css" rel="stylesheet">
+	    <link href="css/sticky-footer.css" rel="stylesheet">
+	    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+	    <script src="js/libs/ie-emulation-modes-warning.js"></script>
+	    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+	    <!--[if lt IE 9]>
+	      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+	      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+	    <![endif]-->        
     </head>
-    <body data-ng-controller="IndexController as ctrl" onload="ctrl.disconnect()">
-    
-        <div >
-            <div>
-                <button data-ng-click="ctrl.connect();" data-ng-disabled="ctrl.connected">Connect</button>
-                <button data-ng-click="ctrl.disconnect();"  data-ng-disabled="!ctrl.connected">Disconnect</button>
-                <button data-ng-click="ctrl.sendMessage();" data-ng-disabled="!ctrl.connected">Move</button>
-                <button data-ng-click="ctrl.refresh()">Refresh</button>
-                <button data-ng-click="stop()">{{ctrl.statusTimer}} Timer</button>  
+    <body ng-controller="IndexController as ctrl">
+        <div class="row">        
+            <div class="col-md-2"></div>
+            <div class="col-md-8">
+                <div class="panel panel-default">
+                    <div class="panel-heading text-center" id="areaHeader">
+                    	<img class="pull-left" alt="Robot" src="img/BB8-100x100.png" style="width: 40px; height: 40px;">
+                        <button id="btnLeft" ng-click="ctrl.moveToLeft()" class="btn btn-primary" ><span class="glyphicon glyphicon-arrow-left"></span></button>
+                        <button id="btnUp" ng-click="ctrl.moveToUp()" class="btn btn-primary" ><span class="glyphicon glyphicon-arrow-up"></span></button>
+                        <button id="btnRight" ng-click="ctrl.moveToRight()" class="btn btn-primary" ><span class="glyphicon glyphicon-arrow-right"></span></button>
+                        <button id="btnDown" ng-click="ctrl.moveToDown()" class="btn btn-primary" ><span class="glyphicon glyphicon-arrow-down"></span></button>
+                    </div>
+                    <div class="panel-body" id="areaBody">
+                        <div id="area">
+                            <img id="robo" src="img/BB8-100x100.png"/>
+                        </div>
+                        <br/>
+                    </div>
+                </div>
             </div>
-            <br />
-            <div data-ng-bind="ctrl.response"></div>
+            <div class="col-md-2"></div>
         </div>
         
-        <script src="https://code.jquery.com/jquery-2.2.4.min.js" data-integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" data-crossorigin="anonymous"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js" type="text/javascript"></script>
-        <script type="text/javascript">
-        
-	        var app = angular.module("mainApp", []);
-	        app.controller("IndexController", ['$scope', '$http', '$timeout', function($scope, $http, $timeout){
-	        	
-	        	var self = this;
-	            var stompClient = null;
-	            
-				self.connected = false;	  
-				self.response = "";
-	        	self.statusTimer = "Stop";
-	             
-	            function setConnected(connected) {
-	                self.connected = connected; 
-	            }
-	             
-	            self.connect = function() {
-	                var socket = new SockJS('/robot/chat');
-	                stompClient = Stomp.over(socket);  
-	                stompClient.connect({}, function(frame) {
-	                    setConnected(true);
-	                    stompClient.subscribe('/topic/messages', function(messageOutput) {
-	                        self.showMessageOutput(JSON.parse(messageOutput.body));
-	                    });
-	                });
-	            }
-	             
-	            self.disconnect = function() {
-	                if(stompClient != null) {
-	                    stompClient.disconnect();
-	                }
-	                setConnected(false);
-	            }
-	             
-	            self.sendMessage = function() {
-	                stompClient.send("/app/chat", {}, 'messate test');
-	            }
-	             
-	            self.showMessageOutput = function (messageOutput) {
-	                var positionX = messageOutput.actualPosition[0];
-	                var positionY = messageOutput.actualPosition[1];
-	                var msg = "Robot Position["+positionX+"]["+positionY+"]";
-	                self.response = msg;
-	            }
-	            
-	        	self.refresh = function(){
-	            	$http.get("position").then(function(response){
-	                    var positionX = response.data.actualPosition[0];
-	                    var positionY = response.data.actualPosition[1];
-	                    var msg = "Robot Position["+positionX+"]["+positionY+"]";
-	            		self.response = msg;           		
-	            	});
-	        		
-	        	}
-	        	
-	            $scope.onTimeout = function(){
-	            	self.refresh();
-	            	self.mytimeout = $timeout($scope.onTimeout,1000);
-	            }
-	            
+	    <footer class="footer">
+	      <div class="container text-center">
+	        <p class="text-muted">Robot 2017</p>
+	      </div>
+	    </footer>        
 
-	            $scope.stop = function(){
-	            	if(self.statusTimer == "Stop"){
-		                $timeout.cancel(self.mytimeout);
-		            	self.statusTimer = "Start";	          	
-	            	}else{
-	            		self.mytimeout = $timeout($scope.onTimeout,1000);
-		            	self.statusTimer = "Stop";	          		            		
-	            	}
-	            }	        	
-	        	
-	            self.init = function(){
-		            self.mytimeout = $timeout($scope.onTimeout,1000);
-		            self.connect();	 
-	            }
+		<script src="js/libs/jquery.min.1.11.1.js"></script>
+		<script src="js/libs/bootstrap.min.js"></script>
+		<script src="js/libs/angular.min.js"></script>
+       	<script src="js/libs/sockjs/sockjs.min.js"></script>
+		<script src="js/libs/stomp/lib/stomp.min.js"></script>
+		<script src="js/libs/ie10-viewport-bug-workaround.js"></script>
+		
+        <script src="js/app/app.js"></script>
+        <script src="js/app/controllers/IndexController.js"></script>
+        <script>
+            document.querySelector('body').addEventListener('keydown', function(event) {
+                var tecla = event.keyCode;
 
-	            self.init();
-	            
-	        }]);        
-        
+                if(tecla == 37){
+                    $("#btnLeft").click();
+                }else if(tecla == 38){
+                    $("#btnUp").click();
+                }else if(tecla == 39){
+                    $("#btnRight").click();
+                }else if(tecla == 40){
+                    $("#btnDown").click();
+                }
+            });
         </script>
- 
     </body>
 </html>
