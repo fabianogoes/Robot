@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html data-ng-app="mainApp">
+    <head>
+		<meta charset="UTF-8">
+        <title>Chat WebSocket</title>
+        <script src="js/sockjs-0.3.4.js"></script>
+        <script src="js/stomp.js"></script>
+    </head>
+    <body data-ng-controller="IndexController as ctrl" onload="ctrl.disconnect()">
+    
+        <div >
+            <div>
+                <button data-ng-click="ctrl.connect();" data-ng-disabled="ctrl.connected">Connect</button>
+                <button data-ng-click="ctrl.disconnect();"  data-ng-disabled="!ctrl.connected">Disconnect</button>
+                <button data-ng-click="ctrl.sendMessage();" data-ng-disabled="!ctrl.connected">Move</button>
+                <button data-ng-click="ctrl.refresh()">Refresh</button>
+                <button data-ng-click="stop()">{{ctrl.statusTimer}} Timer</button>  
+            </div>
+            <br />
+            <div data-ng-bind="ctrl.response"></div>
+        </div>
+        
+        <script src="https://code.jquery.com/jquery-2.2.4.min.js" data-integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" data-crossorigin="anonymous"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js" type="text/javascript"></script>
+        <script type="text/javascript">
+        
+	        var app = angular.module("mainApp", []);
+	        app.controller("IndexController", ['$scope', '$http', '$timeout', function($scope, $http, $timeout){
+	        	
+	        	var self = this;
+	            var stompClient = null;
+	            
+				self.connected = false;	  
+				self.response = "";
+	        	self.statusTimer = "Stop";
+	             
+	            function setConnected(connected) {
+	                self.connected = connected; 
+	            }
+	             
+	            self.connect = function() {
+	                var socket = new SockJS('/robot/chat');
+	                stompClient = Stomp.over(socket);  
+	                stompClient.connect({}, function(frame) {
+	                    setConnected(true);
+	                    stompClient.subscribe('/topic/messages', function(messageOutput) {
+	                        self.showMessageOutput(JSON.parse(messageOutput.body));
+	                    });
+	                });
+	            }
+	             
+	            self.disconnect = function() {
+	                if(stompClient != null) {
+	                    stompClient.disconnect();
+	                }
+	                setConnected(false);
+	            }
+	             
+	            self.sendMessage = function() {
+	                stompClient.send("/app/chat", {}, 'messate test');
+	            }
+	             
+	            self.showMessageOutput = function (messageOutput) {
+	                var positionX = messageOutput.actualPosition[0];
+	                var positionY = messageOutput.actualPosition[1];
+	                var msg = "Robot Position["+positionX+"]["+positionY+"]";
+	                self.response = msg;
+	            }
+	            
+	        	self.refresh = function(){
+	            	$http.get("position").then(function(response){
+	                    var positionX = response.data.actualPosition[0];
+	                    var positionY = response.data.actualPosition[1];
+	                    var msg = "Robot Position["+positionX+"]["+positionY+"]";
+	            		self.response = msg;           		
+	            	});
+	        		
+	        	}
+	        	
+	            $scope.onTimeout = function(){
+	            	self.refresh();
+	            	self.mytimeout = $timeout($scope.onTimeout,1000);
+	            }
+	            
+
+	            $scope.stop = function(){
+	            	if(self.statusTimer == "Stop"){
+		                $timeout.cancel(self.mytimeout);
+		            	self.statusTimer = "Start";	          	
+	            	}else{
+	            		self.mytimeout = $timeout($scope.onTimeout,1000);
+		            	self.statusTimer = "Stop";	          		            		
+	            	}
+	            }	        	
+	        	
+	            self.init = function(){
+		            self.mytimeout = $timeout($scope.onTimeout,1000);
+		            self.connect();	 
+	            }
+
+	            self.init();
+	            
+	        }]);        
+        
+        </script>
+ 
+    </body>
+</html>
