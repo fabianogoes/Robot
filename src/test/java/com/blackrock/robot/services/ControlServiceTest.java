@@ -25,14 +25,14 @@ public class ControlServiceTest {
 	
 	@Test
 	public void testExecuteCommandUp(){
-		int expectedVerticalPosition = Ground.MAX_HEIGHT;
+		int expectedVerticalPosition = Ground.MAX_LENGTH;
 		Robot executeCommand = this.service.executeCommand("up");
-		assertEquals("Vertical position of Robot should be Ground.MAX_HEIGHT = "+expectedVerticalPosition, expectedVerticalPosition, executeCommand.getPosition().getVertical());
+		assertEquals("Vertical position of Robot should be Ground.MAX_LENGTH = "+expectedVerticalPosition, expectedVerticalPosition, executeCommand.getPosition().getVertical());
 	}
 	
 	@Test
 	public void testExecuteCommandDown(){
-		int expectedVerticalPosition = Ground.MIN_HEIGHT+1;
+		int expectedVerticalPosition = Ground.MIN_LENGTH+1;
 		Robot executeCommand = this.service.executeCommand("down");
 		assertEquals("Vertical position of Robot should be Ground.MIN_HEIGHT+1 = "+expectedVerticalPosition, expectedVerticalPosition, executeCommand.getPosition().getVertical());
 	}
@@ -53,7 +53,7 @@ public class ControlServiceTest {
 	
 	@Test
 	public void testGetPositionInit() {
-		int expectedVerticalPosition = Ground.MIN_HEIGHT;
+		int expectedVerticalPosition = Ground.MIN_LENGTH;
 		int expectedHorizontalPosition = Ground.MIN_WIDTH;
 		Position position = this.service.getPosition();
 		assertEquals("The vertical position of Robot should be Ground.MIN_HEIGHT = "+expectedVerticalPosition, expectedVerticalPosition, position.getVertical());
@@ -62,11 +62,11 @@ public class ControlServiceTest {
 
 	@Test
 	public void testGetGround() {
-		int heightSizeGroundExpected = Ground.MAX_HEIGHT;
+		int heightSizeGroundExpected = Ground.MAX_LENGTH;
 		int widthSizeGroundExpected = Ground.MAX_WIDTH;
 		Ground ground = this.service.getGround();
-		assertEquals("The height size should be Ground.MAX_HEIGHT = "+heightSizeGroundExpected, heightSizeGroundExpected, ground.getHeight());
-		assertEquals("The width size should be Ground.MAX_WIDTH = "+widthSizeGroundExpected, heightSizeGroundExpected, ground.getHeight());
+		assertEquals("The height size should be Ground.MAX_LENGTH = "+heightSizeGroundExpected, heightSizeGroundExpected, ground.getLength());
+		assertEquals("The width size should be Ground.MAX_WIDTH = "+widthSizeGroundExpected, heightSizeGroundExpected, ground.getLength());
 	}
 	
 }

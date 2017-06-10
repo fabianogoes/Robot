@@ -4,31 +4,31 @@ public class Ground {
 
 	public static final int MIN_WIDTH = 1;
 	public static final int MAX_WIDTH = 10;
-	public static final int MAX_HEIGHT = 10;
-	public static final int MIN_HEIGHT = 1;
+	public static final int MAX_LENGTH = 10;
+	public static final int MIN_LENGTH = 1;
 	
 	private int width;
-	private int height;
+	private int length;
 
 	public Ground() {
 	}
 
-	public Ground(int width, int height) {
+	public Ground(int width, int length) {
 		this.width = width;
-		this.height = height;
+		this.length = length;
 	}
 
 	public int getWidth() {
 		return width;
 	}
 
-	public int getHeight() {
-		return height;
+	public int getLength() {
+		return length;
 	}
 
 	@Override
 	public String toString() {
-		return "RobotGround [width=" + width + ", height=" + height + "]";
+		return "RobotGround [width=" + width + ", length=" + length + "]";
 	}
 
 }

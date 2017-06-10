@@ -12,8 +12,6 @@ import com.blackrock.robot.repository.RobotRepository;
 @Service
 public class ControlService {
 	
-	// TODO: Implement Tests to Service
-	
 	private ControlCommand controlCommand;
 	
 	private RobotRepository repository;
@@ -27,8 +25,7 @@ public class ControlService {
 
 	public Robot executeCommand(String command){
 		System.out.println("<<< ControlService.executeCommand("+command+") >>>");
-		// TODO: to solve the problema of UpperCase in Command 
-		return this.controlCommand.execute(repository.getRobot(), command);
+		return this.controlCommand.execute(repository.getRobot(), command.toLowerCase());
 	}
 	
 	public Position getPosition() {

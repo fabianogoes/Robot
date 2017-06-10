@@ -60,7 +60,7 @@ public class RobotSteps {
 	@Then("^the area should have \\[(\\d+)\\]\\[(\\d+)\\]$")
 	public void the_area_should_have(int groundWidthSize, int groundHeightSize) throws Throwable {
 	    assertEquals("The area width should be "+Ground.MAX_WIDTH, Ground.MAX_WIDTH, groundWidthSize);
-	    assertEquals("The area height should be "+Ground.MAX_HEIGHT, Ground.MAX_HEIGHT, groundHeightSize);
+	    assertEquals("The area height should be "+Ground.MAX_LENGTH, Ground.MAX_LENGTH, groundHeightSize);
 	}	
 	
 	/******************************
@@ -69,7 +69,7 @@ public class RobotSteps {
 	
 	@Given("^That exist a Robot in area$")
 	public void that_exist_a_Robot_in_area() throws Throwable {
-		boolean exists = robot.getExists();
+		boolean exists = robot != null;
 		assertTrue("Should exist a robot in area", exists);
 	}
 
@@ -99,7 +99,7 @@ public class RobotSteps {
 	@Then("^the robot must moved to Up$")
 	public void the_robot_must_moved_to_Up() throws Throwable {
 		Position positionExpected = robot.getPosition();
-		assertEquals("The Robot should is on Ground.MAX_HEIGHT = "+Ground.MAX_HEIGHT, Ground.MAX_HEIGHT, positionExpected.getVertical());
+		assertEquals("The Robot should is on Ground.MAX_LENGTH = "+Ground.MAX_LENGTH, Ground.MAX_LENGTH, positionExpected.getVertical());
 	}
 	
 	/******************************
@@ -131,7 +131,7 @@ public class RobotSteps {
 	@Then("^the robot must moved to Down$")
 	public void the_robot_must_moved_to_Down() throws Throwable {
 		Position positionExpected = robot.getPosition();
-		assertEquals("The Robot should is on position = "+Ground.MIN_HEIGHT+1, Ground.MIN_HEIGHT+1, positionExpected.getVertical());
+		assertEquals("The Robot should is on position = "+Ground.MIN_LENGTH+1, Ground.MIN_LENGTH+1, positionExpected.getVertical());
 	}	
 	
 }

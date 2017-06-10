@@ -10,8 +10,8 @@ public class MoveDownCommand implements Command {
 	@Override
 	public Robot execute(Robot robot) {
 		robot.getPosition().setVertical(robot.getPosition().getVertical()+1);
-		if(robot.getPosition().getVertical() > Ground.MAX_HEIGHT){
-			robot.getPosition().setVertical(Ground.MIN_HEIGHT);
+		if(robot.getPosition().getVertical() > Ground.MAX_LENGTH){
+			robot.getPosition().setVertical(Ground.MIN_LENGTH);
 		}
 		return robot;
 	}

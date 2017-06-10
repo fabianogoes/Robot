@@ -17,7 +17,7 @@ app.controller("IndexController", ['$rootScope', '$http', '$timeout', function($
         $http.get("ground").then(function(response){
         	var GROUND = new Array(2);
         	GROUND[0] = response.data.width; // X    		
-        	GROUND[1] = response.data.height; // Y  
+        	GROUND[1] = response.data.length; // Y  
         	
             var spaceMove = $("#area").width() / GROUND[0];
             self.MATRIZ_X[0] =  Math.round($("#area").offset().left)-20;
