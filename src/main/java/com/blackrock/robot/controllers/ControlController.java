@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.blackrock.robot.models.Robot;
+import com.blackrock.robot.models.RobotGround;
 import com.blackrock.robot.services.ControlService;
 
 @CrossOrigin
@@ -85,7 +86,7 @@ public class ControlController {
 	}	
 	
 	@RequestMapping("/ground")
-	public int[] ground() throws Exception{
+	public RobotGround ground() throws Exception{
 		System.out.println("<<< ground >>>");
 		return service.getGround();
 	}	

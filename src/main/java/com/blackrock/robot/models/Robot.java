@@ -1,11 +1,16 @@
 package com.blackrock.robot.models;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class Robot {
 
-	private int[] ground = {10, 10};
+	private RobotGround ground;
 	private int[] actualPosition = new int[2];
 	
+	// TODO: Uncouple Ground
 	public Robot(){
+		this.ground = new RobotGround(10, 10);
 		this.actualPosition[0] = 0;
 		this.actualPosition[1] = 0;
 	}
@@ -16,7 +21,7 @@ public class Robot {
 
 	public boolean moveToRight() {
 		this.actualPosition[0] += 1; 
-		if(this.actualPosition[0] > ground[0]-1){
+		if(this.actualPosition[0] > ground.getWidth()-1){
 			this.actualPosition[0] = 0;
 		}
 		return true;
@@ -26,14 +31,14 @@ public class Robot {
 		return this.actualPosition;
 	}
 
-	public int[] getGround() {
+	public RobotGround getGround() {
 		return this.ground;
 	}
 
 	public boolean moveToUp() {
 		this.actualPosition[1] -= 1; 
 		if(this.actualPosition[1] < 0){
-			this.actualPosition[1] = ground[1]-1;
+			this.actualPosition[1] = ground.getHeight()-1;
 		}		
 		return true;
 	}
@@ -41,14 +46,14 @@ public class Robot {
 	public boolean moveToLeft() {
 		this.actualPosition[0] -= 1; 
 		if(this.actualPosition[0] < 0){
-			this.actualPosition[0] = ground[0]-1;
+			this.actualPosition[0] = ground.getWidth()-1;
 		}		
 		return true;
 	}
 
 	public boolean moveToDown() {
 		this.actualPosition[1] += 1; 
-		if(this.actualPosition[1] > ground[1]-1){
+		if(this.actualPosition[1] > ground.getHeight()-1){
 			this.actualPosition[1] = 0;
 		}		
 		return true;
