@@ -5,7 +5,7 @@ app.controller('ControlController', ['$timeout','$http'
 	self.actualPosition = null;
 									
 	self.connect = function(){
-		var socket = new SockJS('http://172.16.1.20:8080/robot/topic');
+		var socket = new SockJS('http://192.168.1.39:8080/robot/topic');
 		stompClient = Stomp.over(socket);
 		stompClient.connect({}, function (frame) {
 			stompClient.subscribe('/server/position', function (response) {
