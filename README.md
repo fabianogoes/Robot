@@ -1,4 +1,4 @@
-# Black Rock Robot
+# Robot 
 
 ### Challenge
 -------------
@@ -34,7 +34,7 @@ Regras:
 | 04:00 | Criação do Front-end para exibir o Robo se movimentando pela area.                                    |
 
 
-### Feature Implemented
+### Done
 ----------------------- 
 
 * Criação do Robo.
