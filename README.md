@@ -26,10 +26,34 @@ Regras:
 ### Hours worked
 ----------------
 
-| Tempo | Trabalho                                                                                  |
-|-------|-------------------------------------------------------------------------------------------|
-| 03:00 | Crição/Configuração do Projeto e implementação da 1.0 versão apenas para passar os tests. |   
-| 04:00 | Implementação do Pattern Command tornar possivel e prático adicionar novos comandos.      |              
-| 04:00 | Criação do Front-end para exibir o Robo se movimentando pela area.                        |
+
+| Tempo | Trabalho                                                                                              |
+|-------|-------------------------------------------------------------------------------------------------------|
+| 03:00 | Crição/Configuração do Projeto e implementação da 1.0 versão apenas para passar os tests of Behavior. |   
+| 04:00 | Implementação do Pattern Command tornar possivel e prático adicionar novos comandos.                  |              
+| 04:00 | Criação do Front-end para exibir o Robo se movimentando pela area.                                    |
+
+
+### Feature Implemented
+----------------------- 
+
+* Criação do Robo.
+* Criação da Area/Casa.
+* Andar x Area/Casa.
+* Andar: esquerda, direita, baixo e cima.  
+* Caso o Robo atinja o limite/horizontal da Area/Casa ele volta para o inicio.  
+* Caso o Robo atinja o limite/vertial da Area/Casa ele volta para o inicio. 
+* Implementação do Pattern Command para gerenciar os Comandos do Robo, tornar possivel e prático adicionar novos comandos. 
+* Implementação de REST para enviar comandos ao Robo remotamente.
+* Implementação de um Front-end para exibir o Robo se movimentando.
+* Implementação de um Front-end controle para enviar comandos remotamente para o Robo.
+
+
+### TODO
+--------
+
+* To implement the actions/commands "Turn to".
+* To implement the ground with "Circular"
+ 
 
 

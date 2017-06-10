@@ -16,11 +16,18 @@ import com.blackrock.robot.models.Robot;
 @Repository
 public class RobotRepository {
 	
+	// TODO: To implement the actions/commands "Turn to"
+	// TODO: To implement the ground with "Circular"
+	
 	private static Robot robot;
 	private static Ground ground;
 	private static Map<String, Command> commands;
 	
 	static{
+		initData();
+	}
+	
+	public static void initData(){
 		ground = new Ground(10, 10);
 		
 		commands = new HashMap<>();
