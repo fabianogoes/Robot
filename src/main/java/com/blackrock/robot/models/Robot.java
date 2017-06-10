@@ -1,62 +1,85 @@
 package com.blackrock.robot.models;
 
+import java.util.Map;
+
 import org.springframework.stereotype.Component;
+
+import com.blackrock.robot.commands.Command;
 
 @Component
 public class Robot {
 
-	private RobotGround ground;
-	private int[] actualPosition = new int[2];
-	
-	// TODO: Uncouple Ground
-	public Robot(){
-		this.ground = new RobotGround(10, 10);
-		this.actualPosition[0] = 0;
-		this.actualPosition[1] = 0;
+	private Ground ground;
+	private Position position;
+	private Map<String, Command> commands;
+
+	public Robot() {
 	}
-	
+
+	public Robot(Ground ground, Map<String, Command> commands) {
+		this.ground = ground;
+		this.commands = commands;
+		this.position = new Position(1, 1);
+	}
+
 	public boolean getExists() {
 		return true;
 	}
 
-	public boolean moveToRight() {
-		this.actualPosition[0] += 1; 
-		if(this.actualPosition[0] > ground.getWidth()-1){
-			this.actualPosition[0] = 0;
-		}
-		return true;
+	public void setPosition(Position position) {
+		this.position = position;
 	}
 
-	public int[] getActualPosition() {
-		return this.actualPosition;
+	public Position getPosition() {
+		return this.position;
 	}
 
-	public RobotGround getGround() {
+	public Ground getGround() {
 		return this.ground;
 	}
 
-	public boolean moveToUp() {
-		this.actualPosition[1] -= 1; 
-		if(this.actualPosition[1] < 0){
-			this.actualPosition[1] = ground.getHeight()-1;
-		}		
-		return true;
+	public Map<String, Command> getCommands() {
+		return commands;
 	}
 
-	public boolean moveToLeft() {
-		this.actualPosition[0] -= 1; 
-		if(this.actualPosition[0] < 0){
-			this.actualPosition[0] = ground.getWidth()-1;
-		}		
-		return true;
+	public void setGround(Ground ground) {
+		this.ground = ground;
 	}
 
-	public boolean moveToDown() {
-		this.actualPosition[1] += 1; 
-		if(this.actualPosition[1] > ground.getHeight()-1){
-			this.actualPosition[1] = 0;
-		}		
-		return true;
+	public void setCommands(Map<String, Command> commands) {
+		this.commands = commands;
 	}
+
+	// public boolean moveToRight() {
+	// this.position.setHorizontal(this.position.getHorizontal() + 1);
+	// if (this.position.getHorizontal() > ground.getWidth()) {
+	// this.position.setHorizontal(1);
+	// }
+	// return true;
+	// }
+	//
+	// public boolean moveToUp() {
+	// this.position.setVertical(this.position.getHorizontal() - 1);
+	// if (this.position.getVertical() < 1) {
+	// this.position.setVertical(ground.getHeight());
+	// }
+	// return true;
+	// }
+	//
+	// public boolean moveToLeft() {
+	// this.position.setHorizontal(this.position.getHorizontal() - 1);
+	// if (this.position.getHorizontal() < 1) {
+	// this.position.setHorizontal(ground.getWidth());
+	// }
+	// return true;
+	// }
+	//
+	// public boolean moveToDown() {
+	// this.position.setVertical(this.position.getVertical() + 1);
+	// if (this.position.getVertical() > ground.getHeight()) {
+	// this.position.setVertical(1);
+	// }
+	// return true;
+	// }
 
 }
