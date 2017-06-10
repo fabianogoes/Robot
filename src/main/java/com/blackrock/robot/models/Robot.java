@@ -1,4 +1,4 @@
-package com.blackrock.robot;
+package com.blackrock.robot.models;
 
 public class Robot {
 

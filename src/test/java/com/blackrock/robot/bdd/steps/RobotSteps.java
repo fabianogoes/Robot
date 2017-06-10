@@ -1,8 +1,9 @@
 package com.blackrock.robot.bdd.steps;
 
-import com.blackrock.robot.Robot;
-
 import static org.junit.Assert.*;
+
+import com.blackrock.robot.models.Robot;
+
 import cucumber.api.java.Before;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;

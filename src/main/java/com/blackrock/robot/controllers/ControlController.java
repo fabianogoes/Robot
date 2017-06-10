@@ -1,8 +1,6 @@
-package com.blackrock.robot;
+package com.blackrock.robot.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
@@ -11,25 +9,24 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.blackrock.robot.models.Robot;
+import com.blackrock.robot.services.ControlService;
+
 @CrossOrigin
 @RestController
-@SpringBootApplication
-public class BlackRockRobotApplication {
+public class ControlController {
 
-	public static Robot robot = new Robot();
+	@Autowired
+	private ControlService service;
 	
 	@Autowired
-	private SimpMessagingTemplate simpMessagingTemplate;
-	
-	public static void main(String[] args) {
-		SpringApplication.run(BlackRockRobotApplication.class, args);
-	}
+	private SimpMessagingTemplate simpMessagingTemplate;	
 	
 	@MessageMapping(value="/move/down")
 	@SendTo(value="/server/position")
 	public Robot moveToDown() {
 		System.out.println("<<< moveToDown >>>");
-		robot.moveToDown();
+		Robot robot = service.moveToDown();
 		return robot;
 	}
 
@@ -37,7 +34,7 @@ public class BlackRockRobotApplication {
 	@SendTo(value="/server/position")
 	public Robot moveToRight() {
 		System.out.println("<<< moveToRight >>>");
-		robot.moveToRight();
+		Robot robot = service.moveToRight();
 		return robot;
 	}
 	
@@ -45,7 +42,7 @@ public class BlackRockRobotApplication {
 	@SendTo(value="/server/position")
 	public Robot moveToLeft() {
 		System.out.println("<<< moveToLeft >>>");
-		robot.moveToLeft();
+		Robot robot = service.moveToLeft();
 		return robot;
 	}
 	
@@ -53,14 +50,14 @@ public class BlackRockRobotApplication {
 	@SendTo(value="/server/position")
 	public Robot moveToUp() {
 		System.out.println("<<< moveToUp >>>");
-		robot.moveToUp();
+		Robot robot = service.moveToUp();
 		return robot;
 	}
 	
 	@RequestMapping("/position")
 	public Robot position() throws Exception{
 		System.out.println("<<< position >>>");
-		return robot;
+		return service.getPosition();
 	}	
 	
 	@RequestMapping("/move/{direction}")
@@ -69,28 +66,28 @@ public class BlackRockRobotApplication {
 		
 		switch (direction.toUpperCase()) {
 		case "UP":
-			robot.moveToUp();
+			service.moveToUp();
 			break;
 		case "LEFT":
-			robot.moveToLeft();
+			service.moveToLeft();
 			break;
 		case "DOWN":
-			robot.moveToDown();
+			service.moveToDown();
 			break;
 		case "RIGHT":
-			robot.moveToRight();
+			service.moveToRight();
 			break;
 		default:
 			throw new RuntimeException("Movement not implemented"); 
 		}
-		this.simpMessagingTemplate.convertAndSend("/server/position", robot);
-		return robot;
+		this.simpMessagingTemplate.convertAndSend("/server/position", service.getPosition());
+		return service.getPosition();
 	}	
 	
 	@RequestMapping("/ground")
 	public int[] ground() throws Exception{
 		System.out.println("<<< ground >>>");
-		return robot.getGround();
+		return service.getGround();
 	}	
 	
 }
