@@ -1,47 +1,42 @@
 package com.blackrock.robot.services;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.blackrock.robot.commands.ControlCommand;
+import com.blackrock.robot.models.Ground;
+import com.blackrock.robot.models.Position;
 import com.blackrock.robot.models.Robot;
-import com.blackrock.robot.models.RobotGround;
+import com.blackrock.robot.repository.RobotRepository;
 
 @Service
 public class ControlService {
 	
 	// TODO: Implement Tests to Service
 	
-	private static Robot robot;
-
-	static{
-		robot = new Robot();
+	private ControlCommand controlCommand;
+	
+	private RobotRepository repository;
+	
+	@Autowired
+	public ControlService(ControlCommand controlCommand, RobotRepository repository){
+		this.controlCommand = controlCommand;
+		this.repository = repository;
 	}
 	
-	public Robot moveToDown() {
-		robot.moveToDown();
-		return robot;
+
+	public Robot executeCommand(String command){
+		System.out.println("<<< ControlService.executeCommand("+command+") >>>");
+		// TODO: to solve the problema of UpperCase in Command 
+		return this.controlCommand.execute(repository.getRobot(), command);
+	}
+	
+	public Position getPosition() {
+		return repository.getRobot().getPosition();
 	}
 
-	public Robot moveToRight() {
-		robot.moveToRight();
-		return robot;
-	}
-
-	public Robot moveToLeft() {
-		robot.moveToLeft();
-		return robot;
-	}
-
-	public Robot moveToUp() {
-		robot.moveToUp();
-		return robot;
-	}
-
-	public Robot getPosition() {
-		return robot;
-	}
-
-	public RobotGround getGround() {
-		return robot.getGround();
+	public Ground getGround() {
+		return repository.getRobot().getGround();
 	}
 	
 	

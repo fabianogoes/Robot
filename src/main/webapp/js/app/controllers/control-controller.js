@@ -1,24 +1,20 @@
-app.controller('ControlController', ['$timeout','$http'
-,							 	function($timeout, $http){
+app.controller('ControlController', ['$timeout','$http', function($timeout, $http){
+	
 	var self = this;
-	self.stompClient = null;
-	self.actualPosition = null;
-									
-	self.connect = function(){
-		var socket = new SockJS('http://localhost:8080/robot/topic');
-		stompClient = Stomp.over(socket);
-		stompClient.connect({}, function (frame) {
-			stompClient.subscribe('/server/position', function (response) {
-	    		console.log("subscribe()...");
-	    		self.actualPosition = JSON.parse(response.body).actualPosition; 
-	    	});
-		});
+
+	init = function(){
+		$http.get("position").then(function(response){
+			self.position = response.data;              		
+    	});
 	}
 	
 	self.movePersonagem = function(direction){
-		stompClient.send( "/app/move/" + direction, {}, {});
+		console.log("movePersonagem("+direction+")");
+    	$http.get("move/"+direction).then(function(response){
+    		self.position = response.data;    		
+    	});
 	}
 	
-	self.connect();
+	init();
 	
 }])

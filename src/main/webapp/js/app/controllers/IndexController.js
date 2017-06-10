@@ -3,10 +3,7 @@ app.controller("IndexController", ['$rootScope', '$http', '$timeout', function($
     self = this;
     self.MATRIZ_X = new Array(10);  
     self.MATRIZ_Y = new Array(10);  
-    
-    self.mytimeout = null;
-	self.response = "";
-	self.statusTimer = "Stop";
+	self.position = null;
      
     init = function(){
         $("#area").height(window.innerHeight - $("#areaHeader").height() * 4);
@@ -38,59 +35,44 @@ app.controller("IndexController", ['$rootScope', '$http', '$timeout', function($
         	
     	});
 
-        self.refresh();
+        self.actualPosition();
     }
 
-	self.display = function(robot){
-        var positionX = robot.actualPosition[0];
-        var positionY = robot.actualPosition[1];
-        $("#robo").offset({ top: self.MATRIZ_Y[positionY], left: self.MATRIZ_X[positionX] });
-        console.log("positionX["+positionX+"] - positionY["+positionY+"]" );
+    self.actualPosition = function(){
+    	$http.get("position").then(function(response){
+    		self.displayPersonagem(response.data);	            		
+    	});
+    } 
+    
+	self.displayPersonagem = function(position){
+		console.log("displayPersonagem()...");
+		console.log(position);
+		self.position = position;
+        $("#robo").offset({ top: self.MATRIZ_Y[position.vertical-1], left: self.MATRIZ_X[position.horizontal-1] });
 	}	            
     
+	self.moveTo = function(direction){
+		console.log("moveTo("+direction+")");
+    	$http.get("move/"+direction).then(function(response){
+    		self.displayPersonagem(response.data);    		
+    	});
+		
+	}	            
+    
+	/**
+	 * Connect to Backend by Websocket to refresh Position on realtime
+	 */
+	//var socket = new SockJS('http://localhost:8080/robot/topic');
 	var socket = new SockJS('/robot/topic');
 	var stompClient = null;
     stompClient = Stomp.over(socket);
     stompClient.connect({}, function (frame) {
+    	console.log("connect()...");
     	stompClient.subscribe('/server/position', function (response) {
-    		console.log("subscribe()...");
-    		self.display(JSON.parse(response.body)); 
+    		console.log("subscribe()..")
+    		self.actualPosition();
     	});
-    });	
-	
-	self.moveToDown = function(){
-    	$http.get("move/down").then(function(response){
-    		self.display(response.data);    		
-    	});
-		
-	}	            
-    
-	self.moveToRight = function(){
-		$http.get("move/right").then(function(response){
-			self.display(response.data);    		
-		});
-		
-	}	            
-	
-	self.moveToUp = function(){
-		$http.get("move/up").then(function(response){
-			self.display(response.data);    		
-		});
-		
-	}	            
-	
-	self.moveToLeft = function(){
-		$http.get("move/left").then(function(response){
-			self.display(response.data);    		
-		});
-		
-	}	            
-	
-	self.refresh = function(){
-    	$http.get("position").then(function(response){
-    		self.display(response.data);	            		
-    	});
-	}    
+    });		
 	
     init();
 
