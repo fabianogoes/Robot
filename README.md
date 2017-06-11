@@ -16,7 +16,7 @@
 *Regras:*
 
 * ~Código escrito em inglês;~
-* ~Deve-se criar testes de unidade; “Junit,~ Mockito”;
+* ~Deve-se criar testes de unidade; “Junit, Mockito”~;
 * ~Deve-se criar testes de comportamento; “Cucumber”;~
 * ~A cada movimento de andar é preciso informar qual a localização atual do robô no espaço;~
 * ~Informar qual tempo gasto para execução total da atividade;~
@@ -32,7 +32,7 @@
 | 03:00 | Crição/Configuração do Projeto e implementação da 1.0 versão apenas para passar os tests of Behavior. |   
 | 03:00 | Implementação do Pattern Command tornar possivel e prático adicionar novos comandos.                  |              
 | 04:00 | Criação do Front-end para exibir o Robo se movimentando pela area.                                    |
-| 01:00 | Testes Unitários: JUnit                                                                               |
+| 02:00 | Testes Unitários: JUnit, Mockito                                                                      |
 
 
 ### Done

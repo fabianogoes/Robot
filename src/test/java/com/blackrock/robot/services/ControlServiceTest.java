@@ -1,72 +1,98 @@
 package com.blackrock.robot.services;
 
-import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import com.blackrock.robot.commands.ControlCommand;
 import com.blackrock.robot.models.Ground;
 import com.blackrock.robot.models.Position;
 import com.blackrock.robot.models.Robot;
-import com.blackrock.robot.repository.RobotRepository;
 
+@RunWith(SpringRunner.class)
+@SpringBootTest
 public class ControlServiceTest {
 
 	private ControlService service;
 	
+	@Mock
+	private ControlCommand controlCommand;
+	
+	@Mock
+	private Robot robotMocked;
+	
 	@Before
 	public void setup(){
-		RobotRepository.initData();
-		ControlCommand controlCommand = new ControlCommand();
-		RobotRepository repository = new RobotRepository();
-		this.service = new ControlService(controlCommand, repository);
+		this.service = new ControlService(controlCommand, robotMocked);
 	}
 	
 	@Test
 	public void testExecuteCommandUp(){
-		int expectedVerticalPosition = Ground.MAX_LENGTH;
-		Robot executeCommand = this.service.executeCommand("up");
-		assertEquals("Vertical position of Robot should be Ground.MAX_LENGTH = "+expectedVerticalPosition, expectedVerticalPosition, executeCommand.getPosition().getVertical());
+		String command = "up";
+
+		when(this.controlCommand.execute(robotMocked, command)).thenReturn(robotMocked);
+		
+		this.service.executeCommand(command);
+		
+		verify(this.controlCommand, times(1)).execute(robotMocked, command);
 	}
 	
 	@Test
 	public void testExecuteCommandDown(){
-		int expectedVerticalPosition = Ground.MIN_LENGTH+1;
-		Robot executeCommand = this.service.executeCommand("down");
-		assertEquals("Vertical position of Robot should be Ground.MIN_HEIGHT+1 = "+expectedVerticalPosition, expectedVerticalPosition, executeCommand.getPosition().getVertical());
-	}
+		String command = "down";
+
+		when(this.controlCommand.execute(robotMocked, command)).thenReturn(robotMocked);
+		
+		this.service.executeCommand(command);
+		
+		verify(this.controlCommand, times(1)).execute(robotMocked, command);	}
 	
 	@Test
 	public void testExecuteCommandLeft(){
-		int expectedHorizontalPosition = Ground.MAX_WIDTH;
-		Robot executeCommand = this.service.executeCommand("left");
-		assertEquals("Vertical position of Robot should be Ground.MAX_WIDTH = "+expectedHorizontalPosition, expectedHorizontalPosition, executeCommand.getPosition().getHorizontal());
-	}
+		String command = "left";
+
+		when(this.controlCommand.execute(robotMocked, command)).thenReturn(robotMocked);
+		
+		this.service.executeCommand(command);
+		
+		verify(this.controlCommand, times(1)).execute(robotMocked, command);	}
 	
 	@Test
 	public void testExecuteCommandRight(){
-		int expectedHorizontalPosition = Ground.MIN_WIDTH+1;
-		Robot executeCommand = this.service.executeCommand("right");
-		assertEquals("Vertical position of Robot should be Ground.MIN_WIDTH+1 = "+expectedHorizontalPosition, expectedHorizontalPosition, executeCommand.getPosition().getHorizontal());
-	}
+		String command = "right";
+
+		when(this.controlCommand.execute(robotMocked, command)).thenReturn(robotMocked);
+		
+		this.service.executeCommand(command);
+		
+		verify(this.controlCommand, times(1)).execute(robotMocked, command);	}
 	
 	@Test
-	public void testGetPositionInit() {
-		int expectedVerticalPosition = Ground.MIN_LENGTH;
-		int expectedHorizontalPosition = Ground.MIN_WIDTH;
-		Position position = this.service.getPosition();
-		assertEquals("The vertical position of Robot should be Ground.MIN_HEIGHT = "+expectedVerticalPosition, expectedVerticalPosition, position.getVertical());
-		assertEquals("The horizontal position of Robot should be Ground.MIN_WIDTH = "+expectedHorizontalPosition, expectedVerticalPosition, position.getHorizontal());
+	public void testGetPosition() {
+		Position positionMocked = mock(Position.class);
+		when(this.robotMocked.getPosition()).thenReturn(positionMocked);
+		
+		this.service.getPosition();
+		
+		verify(this.robotMocked).getPosition();
 	}
 
 	@Test
 	public void testGetGround() {
-		int heightSizeGroundExpected = Ground.MAX_LENGTH;
-		int widthSizeGroundExpected = Ground.MAX_WIDTH;
-		Ground ground = this.service.getGround();
-		assertEquals("The height size should be Ground.MAX_LENGTH = "+heightSizeGroundExpected, heightSizeGroundExpected, ground.getLength());
-		assertEquals("The width size should be Ground.MAX_WIDTH = "+widthSizeGroundExpected, heightSizeGroundExpected, ground.getLength());
+		Ground groundMocked = mock(Ground.class);
+		when(this.robotMocked.getGround()).thenReturn(groundMocked);
+		
+		this.service.getGround();
+		
+		verify(this.robotMocked).getGround();
 	}
 	
 }

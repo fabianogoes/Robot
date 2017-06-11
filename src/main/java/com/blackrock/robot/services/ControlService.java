@@ -7,33 +7,34 @@ import com.blackrock.robot.commands.ControlCommand;
 import com.blackrock.robot.models.Ground;
 import com.blackrock.robot.models.Position;
 import com.blackrock.robot.models.Robot;
-import com.blackrock.robot.repository.RobotRepository;
 
 @Service
 public class ControlService {
 	
 	private ControlCommand controlCommand;
 	
-	private RobotRepository repository;
+	//private RobotRepository repository;
+	private Robot robot;
+	
 	
 	@Autowired
-	public ControlService(ControlCommand controlCommand, RobotRepository repository){
+	public ControlService(ControlCommand controlCommand, Robot robot){
 		this.controlCommand = controlCommand;
-		this.repository = repository;
+		this.robot = robot;
 	}
 	
 
 	public Robot executeCommand(String command){
 		System.out.println("<<< ControlService.executeCommand("+command+") >>>");
-		return this.controlCommand.execute(repository.getRobot(), command.toLowerCase());
+		return this.controlCommand.execute(robot, command);
 	}
 	
 	public Position getPosition() {
-		return repository.getRobot().getPosition();
+		return robot.getPosition();
 	}
 
 	public Ground getGround() {
-		return repository.getRobot().getGround();
+		return robot.getGround();
 	}
 	
 	

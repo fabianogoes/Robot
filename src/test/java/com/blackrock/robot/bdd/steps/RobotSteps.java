@@ -40,7 +40,7 @@ public class RobotSteps {
 		commands.put("right", new MoveRightCommand());
 		
 		robot = new Robot(ground, commands);
-		controlCommand = new ControlCommand();
+		controlCommand = new ControlCommand(commands);
 	}
 	
 	/******************************

@@ -1,9 +1,12 @@
-app.controller("IndexController", ['$rootScope', '$http', '$timeout', function($rootScope, $http, $timeout){
+app.controller("IndexController", ['$rootScope', '$http', '$timeout', '$window', function($rootScope, $http, $timeout, $window){
 
     self = this;
     self.MATRIZ_X = new Array(10);  
     self.MATRIZ_Y = new Array(10);  
 	self.position = null;
+	self.scenario = "House";
+	self.backgroundImageUrl = "img/ground-house.jpg";
+	
      
     init = function(){
         $("#area").height(window.innerHeight - $("#areaHeader").height() * 4);
@@ -57,7 +60,23 @@ app.controller("IndexController", ['$rootScope', '$http', '$timeout', function($
     		self.displayPersonagem(response.data);    		
     	});
 		
-	}	            
+	}	
+	
+	self.changeScenario = function(value){
+		console.log(value);
+		if(value == "Star Wars"){
+			console.log("Star Wars - Selected");
+			self.backgroundImageUrl = "img/ground-starwars.jpg";
+			self.imageRobo = "img/robot-starwars.png";
+		}else if(value == "House"){
+			console.log("House - Selected");
+			self.backgroundImageUrl = "img/ground-house.jpg";
+			self.imageRobo = "img/robot-house.png";
+		}
+		console.log("backgroundImageUrl = "+self.backgroundImageUrl);
+		$('#areaBody').css("background-image", "url("+self.backgroundImageUrl+")");
+		$('#robo').attr('src', self.imageRobo);
+	}
     
 	/**
 	 * Connect to Backend by Websocket to refresh Position on realtime
