@@ -39,8 +39,15 @@ app.controller("IndexController", ['$rootScope', '$http', '$timeout', '$window',
     	});
 
         self.actualPosition();
+        self.getProperties();
     }
 
+    self.getProperties = function(){
+    	$http.get("properties").then(function(response){
+    		self.properties = response.data;	            		
+    	});    	
+    }
+    
     self.actualPosition = function(){
     	$http.get("position").then(function(response){
     		self.displayPersonagem(response.data);	            		

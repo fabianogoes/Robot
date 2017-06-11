@@ -55,6 +55,22 @@
 
 * To implement the actions/commands "Turn to".
 * To implement the ground with "Circular"
+
+
+### Build
+---------
+
+```bash
+mvn clean package
+```    
+
+
+### Run   
+
+```bash
+java -Dserver.port=8080 -jar target/*.jar
+```   
+
  
 
 
