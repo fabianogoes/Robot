@@ -73,21 +73,24 @@ java -Dserver.port=8080 -jar target/*.jar
 ```   
 
 **home:** [http://localhost:8080](http://localhost:8080)   
-
-![Home](src/main/webapp/img/home.png)   
+ 
 
 **control:** [http://localhost:8080/control.html](http://localhost:8080/control.html)
-
-![Home](src/main/webapp/img/control.png)   
 
 
 
 ### Continuous Integration on Heroku: Cloud Application Platform
 ----------------------------------------------------------------
 
-home: [https://challenge-robot.herokuapp.com/](https://challenge-robot.herokuapp.com/)
+**home:** [https://challenge-robot.herokuapp.com/](https://challenge-robot.herokuapp.com/)   
 
-control: [https://challenge-robot.herokuapp.com/control.html](https://challenge-robot.herokuapp.com/control.html)
+
+![Home](src/main/webapp/img/home.png)  
+
+**control:** [https://challenge-robot.herokuapp.com/control.html](https://challenge-robot.herokuapp.com/control.html)   
+
+
+![Home](src/main/webapp/img/home.png)  
 
 
  
