@@ -40,7 +40,7 @@ public class RobotSteps {
 		commands.put("right", new MoveRightCommand());
 		
 		robot = new Robot(ground, commands);
-		controlCommand = new ControlCommand(commands);
+		controlCommand = new ControlCommand(commands, ground);
 	}
 	
 	/******************************
@@ -59,8 +59,8 @@ public class RobotSteps {
 
 	@Then("^the area should have \\[(\\d+)\\]\\[(\\d+)\\]$")
 	public void the_area_should_have(int groundWidthSize, int groundHeightSize) throws Throwable {
-	    assertEquals("The area width should be "+Ground.MAX_WIDTH, Ground.MAX_WIDTH, groundWidthSize);
-	    assertEquals("The area height should be "+Ground.MAX_LENGTH, Ground.MAX_LENGTH, groundHeightSize);
+	    assertEquals("The area width should be "+ground.getWidth(), ground.getWidth(), groundWidthSize);
+	    assertEquals("The area height should be "+ground.getLength(), ground.getLength(), groundHeightSize);
 	}	
 	
 	/******************************
@@ -83,7 +83,8 @@ public class RobotSteps {
 	@Then("^the robot must moved to Right$")
 	public void the_robot_must_moved_to_right() throws Throwable {
 		Position positionExpected = robot.getPosition();
-		assertEquals("The Robot should is on Position = "+Ground.MIN_WIDTH+1, Ground.MIN_WIDTH+1, positionExpected.getHorizontal());
+		int startHorizontal = 1;
+		assertEquals("The Robot should is on Position = 1"+startHorizontal+1, startHorizontal+1, positionExpected.getHorizontal());
 	}
 	
 	/******************************
@@ -99,7 +100,7 @@ public class RobotSteps {
 	@Then("^the robot must moved to Up$")
 	public void the_robot_must_moved_to_Up() throws Throwable {
 		Position positionExpected = robot.getPosition();
-		assertEquals("The Robot should is on Ground.MAX_LENGTH = "+Ground.MAX_LENGTH, Ground.MAX_LENGTH, positionExpected.getVertical());
+		assertEquals("The Robot should is on Ground.MAX_LENGTH = "+ground.getLength(), ground.getLength(), positionExpected.getVertical());
 	}
 	
 	/******************************
@@ -115,7 +116,7 @@ public class RobotSteps {
 	@Then("^the robot must moved to Left$")
 	public void the_robot_must_moved_to_Left() throws Throwable {
 		Position positionExpected = robot.getPosition();
-		assertEquals("The Robot should is on Ground.MAX_WIDTH = "+Ground.MAX_WIDTH, Ground.MAX_WIDTH, positionExpected.getHorizontal());
+		assertEquals("The Robot should is on Ground.MAX_WIDTH = "+ground.getWidth(), ground.getWidth(), positionExpected.getHorizontal());
 	}	
 	
 	/******************************
@@ -131,7 +132,8 @@ public class RobotSteps {
 	@Then("^the robot must moved to Down$")
 	public void the_robot_must_moved_to_Down() throws Throwable {
 		Position positionExpected = robot.getPosition();
-		assertEquals("The Robot should is on position = "+Ground.MIN_LENGTH+1, Ground.MIN_LENGTH+1, positionExpected.getVertical());
+		int startVertical = 1;
+		assertEquals("The Robot should is on position = "+startVertical+1, startVertical+1, positionExpected.getVertical());
 	}	
 	
 }

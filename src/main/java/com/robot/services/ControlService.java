@@ -13,9 +13,7 @@ public class ControlService {
 	
 	private ControlCommand controlCommand;
 	
-	//private RobotRepository repository;
 	private Robot robot;
-	
 	
 	@Autowired
 	public ControlService(ControlCommand controlCommand, Robot robot){

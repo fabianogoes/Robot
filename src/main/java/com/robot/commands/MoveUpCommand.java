@@ -8,10 +8,10 @@ public class MoveUpCommand implements Command {
 	private static final long serialVersionUID = 3746637947340847485L;
 
 	@Override
-	public Robot execute(Robot robot) {
+	public Robot execute(Robot robot, Ground ground) {
 		robot.getPosition().setVertical(robot.getPosition().getVertical()-1);
-		if(robot.getPosition().getVertical() < Ground.MIN_LENGTH){
-			robot.getPosition().setVertical(Ground.MAX_LENGTH);
+		if(robot.getPosition().getVertical() < 1){
+			robot.getPosition().setVertical(ground.getLength());
 		}
 		return robot;
 	}

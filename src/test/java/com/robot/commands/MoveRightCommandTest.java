@@ -8,11 +8,14 @@ import com.robot.builders.PositionBuilder;
 import com.robot.builders.RobotBuilder;
 import com.robot.commands.Command;
 import com.robot.commands.MoveRightCommand;
+import com.robot.models.Ground;
 import com.robot.models.Position;
 import com.robot.models.Robot;
 
 public class MoveRightCommandTest {
 
+	private Ground ground = new Ground(10, 10);
+	
 	@Test
 	public void executeTest() {
 		int positionHorizontalInit = 1;
@@ -20,7 +23,7 @@ public class MoveRightCommandTest {
 		Robot robot = new RobotBuilder().withPosition(position).build();
 		Command command = new MoveRightCommand();
 		
-		Robot robotActual = command.execute(robot);
+		Robot robotActual = command.execute(robot, ground);
 		
 		assertEquals("vertical position should be positionHorizontalInit + 1", positionHorizontalInit+1, robotActual.getPosition().getHorizontal());
 	}	
@@ -32,7 +35,7 @@ public class MoveRightCommandTest {
 		Robot robot = new RobotBuilder().withPosition(position).build();
 		Command command = new MoveRightCommand();
 		
-		Robot robotActual = command.execute(robot);
+		Robot robotActual = command.execute(robot, ground);
 		
 		assertEquals("vertical position should be 1 after Limit Horizontal Exceeded to Right", 1, robotActual.getPosition().getHorizontal());
 	}	

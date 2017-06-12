@@ -15,12 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.robot.commands.Command;
-import com.robot.commands.ControlCommand;
-import com.robot.commands.MoveDownCommand;
-import com.robot.commands.MoveLeftCommand;
-import com.robot.commands.MoveRightCommand;
-import com.robot.commands.MoveUpCommand;
+import com.robot.models.Ground;
 import com.robot.models.Robot;
 
 @RunWith(SpringRunner.class)
@@ -36,10 +31,13 @@ public class ControlCommandTest {
 	@Mock
 	private Map<String, Command> commandsMocked;
 	
+	@Mock
+	private Ground groundMocked;
+	
 	
 	@Before
 	public void setUp(){
-		controlCommand = new ControlCommand(commandsMocked);
+		controlCommand = new ControlCommand(commandsMocked, groundMocked);
 	}
 	
 	@Test
@@ -48,12 +46,12 @@ public class ControlCommandTest {
 		Command commandExecuteMocked = mock(MoveUpCommand.class);
 		
 		when(this.commandsMocked.get(command)).thenReturn(commandExecuteMocked);
-		when(commandExecuteMocked.execute(robot)).thenReturn(robot);
+		when(commandExecuteMocked.execute(robot, groundMocked)).thenReturn(robot);
 		
 		controlCommand.execute(robot, command);
 		
 		verify(this.commandsMocked, times(1)).get(command);
-		verify(commandExecuteMocked, times(1)).execute(robot);
+		verify(commandExecuteMocked, times(1)).execute(robot, groundMocked);
 	}
 	
 	@Test
@@ -62,12 +60,12 @@ public class ControlCommandTest {
 		Command commantExecuteMocked = mock(MoveDownCommand.class);
 		
 		when(this.commandsMocked.get(command)).thenReturn(commantExecuteMocked);
-		when(commantExecuteMocked.execute(robot)).thenReturn(robot);
+		when(commantExecuteMocked.execute(robot, groundMocked)).thenReturn(robot);
 		
 		controlCommand.execute(robot, command);
 		
 		verify(this.commandsMocked, times(1)).get(command);
-		verify(commantExecuteMocked, times(1)).execute(robot);
+		verify(commantExecuteMocked, times(1)).execute(robot, groundMocked);
 	}
 	
 	@Test
@@ -76,12 +74,12 @@ public class ControlCommandTest {
 		Command commantExecuteMocked = mock(MoveLeftCommand.class);
 		
 		when(this.commandsMocked.get(command)).thenReturn(commantExecuteMocked);
-		when(commantExecuteMocked.execute(robot)).thenReturn(robot);
+		when(commantExecuteMocked.execute(robot, groundMocked)).thenReturn(robot);
 		
 		controlCommand.execute(robot, command);
 		
 		verify(this.commandsMocked, times(1)).get(command);
-		verify(commantExecuteMocked, times(1)).execute(robot);
+		verify(commantExecuteMocked, times(1)).execute(robot, groundMocked);
 	}
 	
 	@Test
@@ -90,12 +88,12 @@ public class ControlCommandTest {
 		Command commantExecuteMocked = mock(MoveRightCommand.class);
 		
 		when(this.commandsMocked.get(command)).thenReturn(commantExecuteMocked);
-		when(commantExecuteMocked.execute(robot)).thenReturn(robot);
+		when(commantExecuteMocked.execute(robot, groundMocked)).thenReturn(robot);
 		
 		controlCommand.execute(robot, command);
 		
 		verify(this.commandsMocked, times(1)).get(command);
-		verify(commantExecuteMocked, times(1)).execute(robot);
+		verify(commantExecuteMocked, times(1)).execute(robot, groundMocked);
 	}
 	
 }

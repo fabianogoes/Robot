@@ -7,11 +7,14 @@ import com.robot.builders.PositionBuilder;
 import com.robot.builders.RobotBuilder;
 import com.robot.commands.Command;
 import com.robot.commands.MoveLeftCommand;
+import com.robot.models.Ground;
 import com.robot.models.Position;
 import com.robot.models.Robot;
 
 public class MoveLeftCommandTest {
 
+	private Ground ground = new Ground(10, 10);
+	
 	@Test
 	public void executeTest() {
 		int positionHorizontalInit = 10;
@@ -19,7 +22,7 @@ public class MoveLeftCommandTest {
 		Robot robot = new RobotBuilder().withPosition(position).build();
 		Command command = new MoveLeftCommand();
 		
-		Robot robotActual = command.execute(robot);
+		Robot robotActual = command.execute(robot, ground);
 		
 		assertEquals("vertical position should be positionHorizontalInit - 1", positionHorizontalInit-1, robotActual.getPosition().getHorizontal());
 	}	
@@ -31,7 +34,7 @@ public class MoveLeftCommandTest {
 		Robot robot = new RobotBuilder().withPosition(position).build();
 		Command command = new MoveLeftCommand();
 		
-		Robot robotActual = command.execute(robot);
+		Robot robotActual = command.execute(robot, ground);
 		
 		assertEquals("vertical position should be 10 after Limit Horizontal Exceeded to Left", 10, robotActual.getPosition().getHorizontal());
 	}	

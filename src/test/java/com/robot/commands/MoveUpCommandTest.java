@@ -8,11 +8,14 @@ import com.robot.builders.PositionBuilder;
 import com.robot.builders.RobotBuilder;
 import com.robot.commands.Command;
 import com.robot.commands.MoveUpCommand;
+import com.robot.models.Ground;
 import com.robot.models.Position;
 import com.robot.models.Robot;
 
 public class MoveUpCommandTest {
 
+	private Ground ground = new Ground(10, 10);
+	
 	@Test
 	public void executeTest() {
 		int positionVerticalInit = 10;
@@ -20,7 +23,7 @@ public class MoveUpCommandTest {
 		Robot robot = new RobotBuilder().withPosition(position).build();
 		Command command = new MoveUpCommand();
 		
-		Robot robotActual = command.execute(robot);
+		Robot robotActual = command.execute(robot, ground);
 		
 		assertEquals("vertical position should be positionVerticalInit - 1", positionVerticalInit-1, robotActual.getPosition().getVertical());
 	}	
@@ -32,7 +35,7 @@ public class MoveUpCommandTest {
 		Robot robot = new RobotBuilder().withPosition(position).build();
 		Command command = new MoveUpCommand();
 		
-		Robot robotActual = command.execute(robot);
+		Robot robotActual = command.execute(robot, ground);
 		
 		assertEquals("vertical position should be 10 after Limit Vertical Exceeded to Up", 10, robotActual.getPosition().getVertical());
 	}
